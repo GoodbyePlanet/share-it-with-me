@@ -1,22 +1,12 @@
 import {GraphQLServer, Options} from "graphql-yoga";
+import {prisma} from "./generated/prisma-client";
 import {GRAPHQL_ENDPOINT, GRAPHQL_PLAYGROUND, GRAPHQL_SUBSCRIPTIONS, PORT} from "./utils/config";
-
-const typeDefs = `
-type Query {
-  character: String!
-}
-`
-
-// Resolvers
-const resolvers = {
-  Query: {
-    character: () => `The force is strong with this API!`
-  }
-}
+import resolvers from "./resolvers";
 
 const server = new GraphQLServer({
-  typeDefs,
-  resolvers
+  typeDefs: './src/schema.graphql',
+  resolvers,
+  context: req => ({...req, prisma})
 });
 
 const options: Options = {

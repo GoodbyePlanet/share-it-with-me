@@ -1,0 +1,17 @@
+mutation {
+    user1: createUser(
+        data: {
+            name: "Pero"
+            username: "perica"
+        }) {
+        id
+    }
+
+    user2: createUser(
+        data: {
+            name: "Jovan"
+            username: "jovica"
+        }) {
+        id
+    }
+}
