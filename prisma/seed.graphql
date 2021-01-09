@@ -1,16 +1,39 @@
 mutation {
-    user1: createUser(
+    user_1: createUser(
         data: {
-            name: "Pero"
-            username: "perica"
+            email: "perica@gmail.com"
+            username: "Perica"
+            role: ADMIN
+            posts: {
+                create: [
+                    {
+                        title: "NodeJS in Action"
+                        content: "Some awesome content..."
+                        tags: {
+                            set: ["NodeJS"]
+                        }
+                    }
+                ]
+            }
         }) {
         id
     }
 
-    user2: createUser(
+    user_2: createUser(
         data: {
-            name: "Jovan"
-            username: "jovica"
+            email: "jovica@gmail.com"
+            username: "Jovica"
+            posts: {
+                create: [
+                    {
+                        title: "Git essentials"
+                        content: "Awesome content for GIT..."
+                        tags: {
+                            set: ["git", "github"]
+                        }
+                    }
+                ]
+            }
         }) {
         id
     }

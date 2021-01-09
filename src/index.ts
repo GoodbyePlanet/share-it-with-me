@@ -18,4 +18,4 @@ const options: Options = {
 
 // noinspection JSIgnoredPromiseFromCall
 server.start(options, ({port}): void =>
-  console.log(`Server is running on http://localhost:${port}`));
+  console.log(`🚀 Server ready at: http://localhost:${port}`));

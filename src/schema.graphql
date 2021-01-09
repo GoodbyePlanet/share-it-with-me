@@ -5,6 +5,24 @@ type Query {
 
 type User {
     id: ID!
-    name: String!
+    createdAt: String
+    email: String!
     username: String!
+    role: Role!
+    posts: [Post!]
+}
+
+type Post {
+    id: ID!
+    createdAt: String
+    updatedAt: String
+    title: String!
+    content: String!
+    author: User!
+    tags: [String!]
+}
+
+enum Role {
+    ADMIN
+    USER
 }

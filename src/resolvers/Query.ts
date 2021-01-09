@@ -3,7 +3,9 @@ import {FragmentableArray, User, UserNullablePromise} from "../generated/prisma-
 
 export const Query = {
   users(_: any, __: any, ctx: Context): FragmentableArray<User> {
-    return ctx.prisma.users();
+    let users = ctx.prisma.users();
+    users.then(value => console.log("users ", value));
+    return users;
   },
   userById(_: any, args: any, ctx: Context): UserNullablePromise {
     return ctx.prisma.user({id: args.id});
