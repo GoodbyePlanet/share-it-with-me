@@ -1,13 +1,9 @@
 import {Context} from "../types";
-import {FragmentableArray, User, UserNullablePromise} from "../generated/prisma-client";
+import {FragmentableArray, Post, User, UserNullablePromise} from "../generated/prisma-client";
 
 export const Query = {
-  users(_: any, __: any, ctx: Context): FragmentableArray<User> {
-    let users = ctx.prisma.users();
-    users.then(value => console.log("users ", value));
-    return users;
-  },
-  userById(_: any, args: any, ctx: Context): UserNullablePromise {
-    return ctx.prisma.user({id: args.id});
-  }
+  users: (_: any, __: any, ctx: Context): FragmentableArray<User> => ctx.prisma.users(),
+  userById: (_: any, {id}: any, ctx: Context): UserNullablePromise => ctx.prisma.user({id}),
+  posts: (_: any, __: any, ctx: Context): FragmentableArray<Post> => ctx.prisma.posts()
+
 }
