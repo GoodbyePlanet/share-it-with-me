@@ -349,6 +349,7 @@ type User {
   id: ID!
   createdAt: DateTime!
   email: String!
+  password: String!
   username: String!
   role: Role!
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
@@ -363,6 +364,7 @@ type UserConnection {
 input UserCreateInput {
   id: ID
   email: String!
+  password: String!
   username: String!
   role: Role
   posts: PostCreateManyWithoutAuthorInput
@@ -376,6 +378,7 @@ input UserCreateOneWithoutPostsInput {
 input UserCreateWithoutPostsInput {
   id: ID
   email: String!
+  password: String!
   username: String!
   role: Role
 }
@@ -392,6 +395,8 @@ enum UserOrderByInput {
   createdAt_DESC
   email_ASC
   email_DESC
+  password_ASC
+  password_DESC
   username_ASC
   username_DESC
   role_ASC
@@ -402,6 +407,7 @@ type UserPreviousValues {
   id: ID!
   createdAt: DateTime!
   email: String!
+  password: String!
   username: String!
   role: Role!
 }
@@ -426,6 +432,7 @@ input UserSubscriptionWhereInput {
 
 input UserUpdateInput {
   email: String
+  password: String
   username: String
   role: Role
   posts: PostUpdateManyWithoutAuthorInput
@@ -433,6 +440,7 @@ input UserUpdateInput {
 
 input UserUpdateManyMutationInput {
   email: String
+  password: String
   username: String
   role: Role
 }
@@ -446,6 +454,7 @@ input UserUpdateOneRequiredWithoutPostsInput {
 
 input UserUpdateWithoutPostsDataInput {
   email: String
+  password: String
   username: String
   role: Role
 }
@@ -492,6 +501,20 @@ input UserWhereInput {
   email_not_starts_with: String
   email_ends_with: String
   email_not_ends_with: String
+  password: String
+  password_not: String
+  password_in: [String!]
+  password_not_in: [String!]
+  password_lt: String
+  password_lte: String
+  password_gt: String
+  password_gte: String
+  password_contains: String
+  password_not_contains: String
+  password_starts_with: String
+  password_not_starts_with: String
+  password_ends_with: String
+  password_not_ends_with: String
   username: String
   username_not: String
   username_in: [String!]

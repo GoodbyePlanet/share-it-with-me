@@ -20,13 +20,15 @@ npm start
 
 ## Deploy Prisma service
     > prisma deploy
-    After successful Prisma deployment it is available on http://http://localhost:4466/_admin 
-    
+
 ## After changing data model we need to manually to re-generate Prisma Client
     > prisma generate
 
 ## To reset Prisma database
     > prisma reset
+
+## To add data from seed.graphql to the prisma service
+    > prisma seed -e .env
 
 ## To generate prisma data model based on existing database and the existing database model
     > prisma introspect

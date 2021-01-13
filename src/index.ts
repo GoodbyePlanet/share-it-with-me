@@ -4,7 +4,7 @@ import {GRAPHQL_ENDPOINT, GRAPHQL_PLAYGROUND, GRAPHQL_SUBSCRIPTIONS, PORT} from 
 import resolvers from "./resolvers";
 
 const server = new GraphQLServer({
-  typeDefs: './src/schema.graphql',
+  typeDefs: ['./src/schema.graphql'],
   resolvers,
   context: req => ({...req, prisma})
 });
