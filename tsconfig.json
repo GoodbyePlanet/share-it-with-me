@@ -6,7 +6,7 @@
       "dom",
       "es6",
       "es2017",
-      "esnext.asynciterable"
+      "esnext"
     ],
     "sourceMap": true,
     "outDir": "./dist",
@@ -23,7 +23,7 @@
     "esModuleInterop": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "resolveJsonModule": true,
+    "resolveJsonModule": true
   },
   "exclude": [
     "node_modules"
