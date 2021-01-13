@@ -1,0 +1,13 @@
+name: Share It With Me GraphQL Schema
+schemaPath: src/schema.graphql
+projects:
+  app:
+    includes:
+      - prisma/seed.graphql
+extensions:
+  endpoints:
+    Default GraphQL Endpoint:
+      url: 'http://localhost:8000/graphql'
+      headers:
+        user-agent: JS GraphQL
+      introspect: false

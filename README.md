@@ -27,3 +27,6 @@ npm start
 
 ## To reset Prisma database
     > prisma reset
+
+## To generate prisma data model based on existing database and the existing database model
+    > prisma introspect
