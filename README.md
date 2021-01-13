@@ -30,3 +30,9 @@ npm start
 
 ## To generate prisma data model based on existing database and the existing database model
     > prisma introspect
+
+## GraphQL playground
+    > http://localhost:8000/playground
+
+## Prisma Admin playground
+    > http://localhost:4466/dev/_admin
