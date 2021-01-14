@@ -1,15 +1,25 @@
-import {Prisma, User, UserCreateInput} from "./generated/prisma-client";
+import {Prisma, User} from "./generated/prisma-client";
 
 export interface Context {
   prisma: Prisma
   request: any
 }
 
-export interface AuthPayload {
+export interface AuthResponse {
   token: string
   user: User
 }
 
-export interface UserInput {
-  user: UserCreateInput
+interface UserInput {
+  email: string
+  username: string
+  password: string
+}
+
+export interface CreateUserInput {
+  user: UserInput
+}
+
+export interface LoginUserInput {
+  user: Omit<UserInput, 'username'>
 }

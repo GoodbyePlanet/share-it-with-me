@@ -1,13 +1,11 @@
 import {Query} from "./Query";
+import {Mutation} from "./mutation";
 import {UserPostsResolver} from "./UserPostsResolver";
 import {PostAuthorResolver} from "./PostAuthorResolver";
-import {signup} from "./mutation/authentication";
 
 export default {
   Query,
-  Mutation: {
-    signup
-  },
+  Mutation,
   User: UserPostsResolver,
   Post: PostAuthorResolver
 }

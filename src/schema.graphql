@@ -5,7 +5,8 @@ type Query {
 }
 
 type Mutation {
-    signup(user: CreateUserInput!): AuthPayload!
+    signup(user: CreateUserInput!): AuthResponse!
+    login(user: LoginUserInput!): AuthResponse!
 }
 
 type User {
@@ -27,7 +28,7 @@ type Post {
     tags: [String!]
 }
 
-type AuthPayload {
+type AuthResponse {
     token: String!
     user: User!
 }
@@ -35,6 +36,11 @@ type AuthPayload {
 input CreateUserInput {
     email: String!
     username: String!
+    password: String!
+}
+
+input LoginUserInput {
+    email: String!
     password: String!
 }
 
