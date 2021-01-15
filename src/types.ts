@@ -1,8 +1,10 @@
 import {Prisma, User} from "./generated/prisma-client";
+import {Request} from "express";
 
 export interface Context {
   prisma: Prisma
-  request: any
+  request: Request
+  user?: User
 }
 
 export interface AuthResponse {
@@ -22,4 +24,14 @@ export interface CreateUserInput {
 
 export interface LoginUserInput {
   user: Omit<UserInput, 'username'>
+}
+
+export interface AuthenticationUser {
+  userId: string
+  role: UserRole
+}
+
+export enum UserRole {
+  ADMIN = "ADMIN",
+  USER = "USER"
 }
