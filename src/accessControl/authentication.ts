@@ -24,13 +24,13 @@ export const getUser = (ctx: ContextParameters): AuthenticationUser | null => {
   return null;
 }
 
-const isAuthenticated = rule(cacheOption)(async (_: any, __: any, ctx: Context) => ctx.user !== null);
+const isAuthenticated = rule(cacheOption)(async (_, __, ctx: Context) => ctx.user !== null);
 
 const isAdmin = rule(cacheOption)(
-  async (_: any, __: any, ctx: Context) => ctx.user?.role === UserRole.ADMIN);
+  async (_, __, ctx: Context) => ctx.user?.role === UserRole.ADMIN);
 
 const isUser = rule(cacheOption)(
-  async (_: any, __: any, ctx: Context) => ctx.user?.role === UserRole.USER);
+  async (_, __, ctx: Context) => ctx.user?.role === UserRole.USER);
 
 
 export const permissions = shield({
