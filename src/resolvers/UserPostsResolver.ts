@@ -1,6 +1,5 @@
-import {Context} from "../types";
-import {FragmentableArray, Post} from "../generated/prisma-client";
+import {UserPostsResolver} from "../types";
 
-export const UserPostsResolver = {
-  posts: (parent: any, _: any, ctx: Context): FragmentableArray<Post> => ctx.prisma.user({id: parent.id}).posts()
+export const UserPosts: UserPostsResolver = {
+  posts: (parent, _, ctx) => ctx.prisma.user({id: parent.id}).posts()
 }

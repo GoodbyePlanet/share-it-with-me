@@ -1,6 +1,6 @@
-import {login, signup} from "./authentication";
+import {Authentication} from "./authentication";
 
 export const Mutation = {
-  signup,
-  login
+  signup: Authentication.signup,
+  login: Authentication.login
 }
