@@ -3,6 +3,7 @@ mutation {
         data: {
             email: "perica@gmail.com"
             username: "Perica"
+            password: "$2y$12$8umiIWt7cdGiQediVOwsAesSoxx4MwO5oJXsL2f7o4Haajy49Yp9O"
             role: ADMIN
             posts: {
                 create: [
@@ -23,6 +24,7 @@ mutation {
         data: {
             email: "jovica@gmail.com"
             username: "Jovica"
+            password: "$2y$12$KxXZtUmO5yqtzAiy7RlfZ.6pa2M8AcTZhHLNEkc8DrqbDSK3Yw4hS"
             posts: {
                 create: [
                     {

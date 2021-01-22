@@ -1,9 +1,11 @@
 import {Query} from "./Query";
-import {UserPostsResolver} from "./UserPostsResolver";
-import {PostAuthorResolver} from "./PostAuthorResolver";
+import {PostAuthor} from "./PostAuthorResolver";
+import {UserPosts} from "./UserPostsResolver";
+import {Mutation} from "./mutation";
 
 export default {
   Query,
-  User: UserPostsResolver,
-  Post: PostAuthorResolver
+  Mutation,
+  User: UserPosts,
+  Post: PostAuthor
 }

@@ -161,6 +161,8 @@ export type UserOrderByInput =
   | "createdAt_DESC"
   | "email_ASC"
   | "email_DESC"
+  | "password_ASC"
+  | "password_DESC"
   | "username_ASC"
   | "username_DESC"
   | "role_ASC"
@@ -181,6 +183,7 @@ export type PostWhereUniqueInput = AtLeastOne<{
 
 export interface UserUpdateInput {
   email?: Maybe<String>;
+  password?: Maybe<String>;
   username?: Maybe<String>;
   role?: Maybe<Role>;
   posts?: Maybe<PostUpdateManyWithoutAuthorInput>;
@@ -189,6 +192,7 @@ export interface UserUpdateInput {
 export interface UserCreateInput {
   id?: Maybe<ID_Input>;
   email: String;
+  password: String;
   username: String;
   role?: Maybe<Role>;
   posts?: Maybe<PostCreateManyWithoutAuthorInput>;
@@ -220,6 +224,7 @@ export interface PostCreateInput {
 
 export interface UserUpdateManyMutationInput {
   email?: Maybe<String>;
+  password?: Maybe<String>;
   username?: Maybe<String>;
   role?: Maybe<Role>;
 }
@@ -237,6 +242,7 @@ export interface PostUpdateManyWithWhereNestedInput {
 export interface UserCreateWithoutPostsInput {
   id?: Maybe<ID_Input>;
   email: String;
+  password: String;
   username: String;
   role?: Maybe<Role>;
 }
@@ -304,6 +310,7 @@ export interface PostSubscriptionWhereInput {
 
 export interface UserUpdateWithoutPostsDataInput {
   email?: Maybe<String>;
+  password?: Maybe<String>;
   username?: Maybe<String>;
   role?: Maybe<Role>;
 }
@@ -500,6 +507,20 @@ export interface UserWhereInput {
   email_not_starts_with?: Maybe<String>;
   email_ends_with?: Maybe<String>;
   email_not_ends_with?: Maybe<String>;
+  password?: Maybe<String>;
+  password_not?: Maybe<String>;
+  password_in?: Maybe<String[] | String>;
+  password_not_in?: Maybe<String[] | String>;
+  password_lt?: Maybe<String>;
+  password_lte?: Maybe<String>;
+  password_gt?: Maybe<String>;
+  password_gte?: Maybe<String>;
+  password_contains?: Maybe<String>;
+  password_not_contains?: Maybe<String>;
+  password_starts_with?: Maybe<String>;
+  password_not_starts_with?: Maybe<String>;
+  password_ends_with?: Maybe<String>;
+  password_not_ends_with?: Maybe<String>;
   username?: Maybe<String>;
   username_not?: Maybe<String>;
   username_in?: Maybe<String[] | String>;
@@ -539,6 +560,7 @@ export interface UserPreviousValues {
   id: ID_Output;
   createdAt: DateTimeOutput;
   email: String;
+  password: String;
   username: String;
   role: Role;
 }
@@ -549,6 +571,7 @@ export interface UserPreviousValuesPromise
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
   email: () => Promise<String>;
+  password: () => Promise<String>;
   username: () => Promise<String>;
   role: () => Promise<Role>;
 }
@@ -559,6 +582,7 @@ export interface UserPreviousValuesSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   email: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
   username: () => Promise<AsyncIterator<String>>;
   role: () => Promise<AsyncIterator<Role>>;
 }
@@ -643,6 +667,7 @@ export interface User {
   id: ID_Output;
   createdAt: DateTimeOutput;
   email: String;
+  password: String;
   username: String;
   role: Role;
 }
@@ -651,6 +676,7 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
   email: () => Promise<String>;
+  password: () => Promise<String>;
   username: () => Promise<String>;
   role: () => Promise<Role>;
   posts: <T = FragmentableArray<Post>>(args?: {
@@ -670,6 +696,7 @@ export interface UserSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   email: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
   username: () => Promise<AsyncIterator<String>>;
   role: () => Promise<AsyncIterator<Role>>;
   posts: <T = Promise<AsyncIterator<PostSubscription>>>(args?: {
@@ -689,6 +716,7 @@ export interface UserNullablePromise
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
   email: () => Promise<String>;
+  password: () => Promise<String>;
   username: () => Promise<String>;
   role: () => Promise<Role>;
   posts: <T = FragmentableArray<Post>>(args?: {

@@ -2,7 +2,7 @@ import * as dotenv from "dotenv";
 
 dotenv.config();
 
-let path;
+let path: string;
 switch (process.env.NODE_ENV) {
   case "production":
     path = `${__dirname}/../../.env.production`;
@@ -18,3 +18,4 @@ export const PRISMA_ENDPOINT = process.env.PRISMA_ENDPOINT;
 export const GRAPHQL_ENDPOINT = process.env.GRAPHQL_ENDPOINT;
 export const GRAPHQL_SUBSCRIPTIONS = process.env.GRAPHQL_SUBSCRIPTIONS;
 export const GRAPHQL_PLAYGROUND = process.env.GRAPHQL_PLAYGROUND;
+export const APP_SECRET = process.env.APP_SECRET;
