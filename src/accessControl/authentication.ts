@@ -45,7 +45,5 @@ export const permissions = shield({
     }
   },
   {
-    fallbackError: async (error) =>
-      error instanceof Error ? new Error('Internal server error')
-        : new Error('Something went terribly wrong!')
+    fallbackError: new Error('Internal server error')
   });
