@@ -3,7 +3,7 @@ import {IRuleConstructorOptions} from "graphql-shield/dist/types";
 import {AuthenticationUser, Context, UserRole} from "../types";
 import * as jwt from "jsonwebtoken";
 import {APP_SECRET} from "../utils/config";
-import {and, not, or, rule, shield} from "graphql-shield";
+import {and, inputRule, not, or, rule, shield} from "graphql-shield";
 
 const contextualCacheOption = {cache: 'contextual'} as IRuleConstructorOptions;
 
@@ -32,6 +32,17 @@ const isAdmin = rule(contextualCacheOption)(
 const isUser = rule(contextualCacheOption)(
   async (_, __, ctx: Context) => ctx.user?.role === UserRole.USER);
 
+const createUserInputFieldsRules = inputRule()(
+  (yup) => {
+    return yup.object(
+      {
+        user: yup.object({
+          email: yup.string().email('Please use valid email').required(),
+          password: yup.string().min(6, "Password has to be at least 6 characters long").required()
+        }),
+      })
+  }
+)
 
 export const permissions = shield({
     Query: {
@@ -40,7 +51,7 @@ export const permissions = shield({
       posts: not(isAuthenticated)
     },
     Mutation: {
-      signup: not(isAuthenticated),
+      signup: and(not(isAuthenticated), createUserInputFieldsRules),
       login: not(isAuthenticated)
     }
   },
