@@ -9,6 +9,16 @@ npm install -g prisma
 
 ### Start application
 
+Example of `.env` file
+
+```
+PRISMA_ENDPOINT="http://localhost:4466/dev"
+GRAPHQL_ENDPOINT=/graphql
+GRAPHQL_SUBSCRIPTIONS=/subscriptions
+GRAPHQL_PLAYGROUND=/playground
+APP_SECRET=<app-secret>
+```
+
 ```
 npm install
 
