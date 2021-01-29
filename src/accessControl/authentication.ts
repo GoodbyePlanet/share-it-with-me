@@ -1,6 +1,6 @@
 import {ContextParameters} from "graphql-yoga/dist/types";
 import {IRuleConstructorOptions} from "graphql-shield/dist/types";
-import {AuthenticationUser, Context, UserRole} from "../types";
+import {AuthenticationUser, Context, UserRole} from "../typings/modelTypes";
 import * as jwt from "jsonwebtoken";
 import {APP_SECRET} from "../utils/config";
 import {and, inputRule, not, or, rule, shield} from "graphql-shield";
@@ -45,16 +45,13 @@ const createUserInputFieldsRules = inputRule()(
 )
 
 export const permissions = shield({
-    Query: {
-      users: and(isAuthenticated, isAdmin),
-      userById: and(isAuthenticated, or(isAdmin, isUser)),
-      posts: not(isAuthenticated)
-    },
-    Mutation: {
-      signup: and(not(isAuthenticated), createUserInputFieldsRules),
-      login: not(isAuthenticated)
-    }
+  Query: {
+    users: and(isAuthenticated, isAdmin),
+    userById: and(isAuthenticated, or(isAdmin, isUser)),
+    posts: not(isAuthenticated)
   },
-  {
-    fallbackError: new Error('Internal server error')
-  });
+  Mutation: {
+    signup: and(not(isAuthenticated), createUserInputFieldsRules),
+    login: not(isAuthenticated)
+  }
+});

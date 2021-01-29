@@ -1,4 +1,4 @@
-import {QueryResolver} from "../types";
+import {QueryResolver} from "../typings/resolverTypes";
 
 export const Query: QueryResolver = {
   users: (_, __, ctx) => ctx.prisma.users(),

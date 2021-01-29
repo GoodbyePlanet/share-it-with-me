@@ -1,10 +1,6 @@
-import {FragmentableArray, Post, Prisma, User, UserNullablePromise, UserPromise} from "./generated/prisma-client";
-import {Request} from "express";
 import {GraphQLResolveInfo} from "graphql";
-
-// export type Resolver<TResult, TParent, TArgs, TContext> = {
-//   [key: string]: ResolverFn<TResult, TParent, TArgs, TContext>;
-// }
+import {FragmentableArray, Post, User, UserNullablePromise, UserPromise} from "../generated/prisma-client";
+import {AuthResponse, Context, CreateUserInput, LoginUserInput} from "./modelTypes";
 
 type ResolverFn<TResult, TParent, TArgs, TContext> = (
   parent: TParent,
@@ -50,37 +46,6 @@ export type AuthenticationResolver<ParentType extends ResolversParent['Mutation'
   signup: Resolver<Promise<ResolversParent['AuthResponse']>, ParentType, CreateUserInput, ContextType>;
 }
 
-export interface Context {
-  prisma: Prisma
-  request: Request
-  user?: User
-}
-
-export interface AuthResponse {
-  token: string
-  user: User
-}
-
-interface UserInput {
-  email: string
-  username: string
-  password: string
-}
-
-export interface CreateUserInput {
-  user: UserInput
-}
-
-export interface LoginUserInput {
-  user: Omit<UserInput, 'username'>
-}
-
-export interface AuthenticationUser {
-  userId: string
-  role: UserRole
-}
-
-export enum UserRole {
-  ADMIN = "ADMIN",
-  USER = "USER"
-}
+// export type Resolver<TResult, TParent, TArgs, TContext> = {
+//   [key: string]: ResolverFn<TResult, TParent, TArgs, TContext>;
+// }

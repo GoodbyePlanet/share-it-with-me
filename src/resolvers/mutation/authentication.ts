@@ -1,6 +1,6 @@
 import * as bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
-import {AuthenticationResolver} from "../../types";
+import {AuthenticationResolver} from "../../typings/resolverTypes";
 import {APP_SECRET} from "../../utils/config";
 import {UserNotFoundError, WrongCredentialsError, UserAlreadyExistsError} from "../../validation";
 import {Role} from "../../generated/prisma-client";
