@@ -2,7 +2,7 @@ import * as bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
 import {AuthenticationResolver} from "../../types";
 import {APP_SECRET} from "../../utils/config";
-import {UserNotFoundError, WrongCredentialsError} from "../../validation";
+import {UserNotFoundError, WrongCredentialsError, UserAlreadyExistsError} from "../../validation";
 import {Role} from "../../generated/prisma-client";
 
 const SALT_WORK_FACTOR = 10;
@@ -27,8 +27,13 @@ export const Authentication: AuthenticationResolver = {
   },
   signup: async (_, {user: userInput}, ctx) => {
     const password = await bcrypt.hash(userInput.password, SALT_WORK_FACTOR);
-    const user = await ctx.prisma.createUser({...userInput, password});
+    const existingUser = await ctx.prisma.$exists.user({email: userInput.email});
 
+    if (existingUser) {
+      return new UserAlreadyExistsError;
+    }
+
+    const user = await ctx.prisma.createUser({...userInput, password});
     return {token: signJwtToken(user.id, user.role), user}
   }
 }
