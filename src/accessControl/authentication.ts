@@ -5,7 +5,7 @@ import * as jwt from "jsonwebtoken";
 import {APP_SECRET} from "../utils/config";
 import {and, not, or, rule, shield} from "graphql-shield";
 
-const cacheOption = {cache: 'contextual'} as IRuleConstructorOptions;
+const contextualCacheOption = {cache: 'contextual'} as IRuleConstructorOptions;
 
 export const getUser = (ctx: ContextParameters): AuthenticationUser | null => {
   const authorization = ctx.request.get('Authorization');
@@ -24,23 +24,28 @@ export const getUser = (ctx: ContextParameters): AuthenticationUser | null => {
   return null;
 }
 
-const isAuthenticated = rule(cacheOption)(async (_, __, ctx: Context) => ctx.user !== null);
+const isAuthenticated = rule(contextualCacheOption)(async (_, __, ctx: Context) => ctx.user !== null);
 
-const isAdmin = rule(cacheOption)(
+const isAdmin = rule(contextualCacheOption)(
   async (_, __, ctx: Context) => ctx.user?.role === UserRole.ADMIN);
 
-const isUser = rule(cacheOption)(
+const isUser = rule(contextualCacheOption)(
   async (_, __, ctx: Context) => ctx.user?.role === UserRole.USER);
 
 
 export const permissions = shield({
-  Query: {
-    users: and(isAuthenticated, isAdmin),
-    userById: and(isAuthenticated, or(isAdmin, isUser)),
-    posts: not(isAuthenticated)
+    Query: {
+      users: and(isAuthenticated, isAdmin),
+      userById: and(isAuthenticated, or(isAdmin, isUser)),
+      posts: not(isAuthenticated)
+    },
+    Mutation: {
+      signup: not(isAuthenticated),
+      login: not(isAuthenticated)
+    }
   },
-  Mutation: {
-    signup: not(isAuthenticated),
-    login: not(isAuthenticated)
-  }
-});
+  {
+    fallbackError: async (error) =>
+      error instanceof Error ? new Error('Internal server error')
+        : new Error('Something went terribly wrong!')
+  });
