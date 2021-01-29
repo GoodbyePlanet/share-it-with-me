@@ -36,7 +36,8 @@ const isUser = rule(cacheOption)(
 export const permissions = shield({
   Query: {
     users: and(isAuthenticated, isAdmin),
-    userById: and(isAuthenticated, or(isAdmin, isUser))
+    userById: and(isAuthenticated, or(isAdmin, isUser)),
+    posts: not(isAuthenticated)
   },
   Mutation: {
     signup: not(isAuthenticated),
