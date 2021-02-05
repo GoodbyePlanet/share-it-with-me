@@ -13,10 +13,12 @@ beforeAll(async () => {
 
 describe("posts", () => {
 
-  it("should get all posts", async () => {
-    const posts = await request(getHost(), postsQuery);
+  it("should get all  posts", async () => {
+    const queryResult = await request(getHost(), postsQuery);
 
-    expect(posts).not.toBeNull();
+    expect(queryResult).not.toBeNull();
+    expect(queryResult).toHaveProperty("posts");
+    expect(queryResult.posts.length).toBeGreaterThan(0);
   });
 })
 
