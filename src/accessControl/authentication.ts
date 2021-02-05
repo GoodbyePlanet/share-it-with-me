@@ -1,4 +1,4 @@
-import {ContextParameters} from "graphql-yoga/dist/types";
+import { Request } from 'express';
 import {IRuleConstructorOptions} from "graphql-shield/dist/types";
 import {AuthenticationUser, Context, UserRole} from "../typings/modelTypes";
 import * as jwt from "jsonwebtoken";
@@ -7,8 +7,8 @@ import {and, inputRule, not, or, rule, shield} from "graphql-shield";
 
 const contextualCacheOption = {cache: 'contextual'} as IRuleConstructorOptions;
 
-export const getUser = (ctx: ContextParameters): AuthenticationUser | null => {
-  const authorization = ctx.request.get('Authorization');
+export const getUser = (request: Request): AuthenticationUser | null => {
+  const authorization = request.get('Authorization');
 
   if (authorization) {
     const token = authorization.replace('Bearer ', '');

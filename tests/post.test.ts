@@ -13,7 +13,7 @@ beforeAll(async () => {
 
 describe("posts", () => {
 
-  it("should get all the posts", async () => {
+  it("should get all posts", async () => {
     const posts = await request(getHost(), postsQuery);
 
     expect(posts).not.toBeNull();

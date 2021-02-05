@@ -9,7 +9,7 @@ export const App = async () => {
     typeDefs: ['./src/schema.graphql'],
     resolvers,
     middlewares: [permissions],
-    context: req => ({...req, prisma, user: getUser(req)})
+    context: ({ request }) => ({...request, prisma, user: getUser(request)})
   });
 
   const options: Options = {
