@@ -36,6 +36,9 @@
             "jsx",
             "json",
             "node"
+        ],
+        "setupFilesAfterEnv": [
+            "./tests/setup.ts"
         ]
     },
     "devDependencies": {
