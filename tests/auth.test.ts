@@ -3,14 +3,9 @@ import request from "graphql-request";
 import {AddressInfo} from "net";
 import {login, signUp} from "./graphql";
 import {CreateUserInput, LoginUserInput} from "../resolvers-example";
-import {prisma} from "../src/generated/prisma-client";
+import {cleanTestData} from "./testData";
 
 let getHost = (): string => "";
-
-const cleanDB = async (): Promise<void> => {
-  await prisma.deleteManyPosts();
-  await prisma.deleteManyUsers();
-}
 
 beforeAll(async () => {
   const app = await App();
@@ -19,7 +14,7 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-  await cleanDB();
+  await cleanTestData();
 });
 
 describe("Auth", (): void => {

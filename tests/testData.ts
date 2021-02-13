@@ -4,7 +4,7 @@ export const createTestData = async () => {
   await prisma.createUser({
     email: "perica@gmail.com",
     username: "Perica",
-    password: "$2y$12$8umiIWt7cdGiQediVOwsAesSoxx4MwO5oJXsL2f7o4Haajy49Yp9O",
+    password: "$2a$10$P9unxIUzSMkanXPkZ2sIAOaXumkFRhSNj4V7LkxpMUE9H358dfYJC",
     role: "ADMIN",
     posts: {
       create: [
@@ -22,7 +22,7 @@ export const createTestData = async () => {
   await prisma.createUser({
     email: "jovica@gmail.com",
     username: "Jovica",
-    password: "$2y$12$KxXZtUmO5yqtzAiy7RlfZ.6pa2M8AcTZhHLNEkc8DrqbDSK3Yw4hS",
+    password: "$2a$10$P9unxIUzSMkanXPkZ2sIAOaXumkFRhSNj4V7LkxpMUE9H358dfYJC",
     posts: {
       create: [
         {
@@ -35,4 +35,9 @@ export const createTestData = async () => {
       ]
     }
   });
+};
+
+export const cleanTestData = async (): Promise<void> => {
+  await prisma.deleteManyPosts();
+  await prisma.deleteManyUsers();
 }

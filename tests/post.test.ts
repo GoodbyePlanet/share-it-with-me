@@ -2,7 +2,7 @@ import {request} from 'graphql-request';
 import {posts as postsQuery} from './graphql';
 import {AddressInfo} from "net";
 import {App} from "../src/startServer";
-import {createTestData} from "./testData";
+import {cleanTestData, createTestData} from "./testData";
 
 let getHost = (): string => "";
 
@@ -13,13 +13,18 @@ beforeAll(async () => {
   await createTestData();
 });
 
+afterAll(async () => {
+  await cleanTestData();
+});
+
+
 describe("Posts", (): void => {
 
   it("should get all posts", async (): Promise<void> => {
-    const queryResult = await request(getHost(), postsQuery);
+    const postsQueryResult = await request(getHost(), postsQuery);
 
-    expect(queryResult).not.toBeNull();
-    expect(queryResult).toHaveProperty("posts");
-    expect(queryResult.posts.length).toBe(2);
+    expect(postsQueryResult).not.toBeNull();
+    expect(postsQueryResult).toHaveProperty("posts");
+    expect(postsQueryResult.posts.length).toBe(2);
   });
 })

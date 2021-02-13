@@ -35,3 +35,13 @@ export const posts = /* GraphQL */ `
   }
 }
 `
+
+export const users = /* GraphQL */ `
+  {
+  users {
+    id
+    username
+    email
+  }
+}
+`
