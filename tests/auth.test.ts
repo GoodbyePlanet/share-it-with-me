@@ -2,7 +2,7 @@ import {App} from "../src/startServer";
 import {GraphQLClient} from "graphql-request";
 import {AddressInfo} from "net";
 import {login, signUp} from "./graphql";
-import {cleanTestData, createTestData} from "./testData";
+import {cleanAuthTest} from "./testData";
 
 let graphQLClient: GraphQLClient;
 let getHost = (): string => "";
@@ -11,11 +11,10 @@ beforeAll(async () => {
   const app = await App();
   const {port} = app.address() as AddressInfo;
   getHost = () => `http://localhost:${port}/graphql`;
-  await createTestData();
 });
 
 afterAll(async () => {
-  await cleanTestData();
+  await cleanAuthTest();
 });
 
 beforeEach((): void => {
@@ -23,7 +22,6 @@ beforeEach((): void => {
 });
 
 describe("Auth", (): void => {
-  // describe("SignUp", (): void => {
   const testUser = "TestUser";
   const testUserEmail = "testuser@gmail.com";
 
@@ -82,10 +80,7 @@ describe("Auth", (): void => {
 
       await expect(signUpResponse).rejects.toThrow("Password has to be at least 6 characters long");
     });
-  // });
 
-  // describe("Login", (): void => {
-  //   const testUserEmail = "testuser@gmail.com";
   const userLoginMutationVariables = {
     user: {
       email: testUserEmail,
@@ -133,5 +128,4 @@ describe("Auth", (): void => {
 
       await expect(loginResponse).rejects.toThrow("Provided credentials are invalid!");
     });
-  // });
 });
