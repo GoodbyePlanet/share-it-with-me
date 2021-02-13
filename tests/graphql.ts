@@ -1,22 +1,27 @@
-export const signup = /* GraphQL */ `
-  mutation signup($user: { $email: String!, $username: String!, $password: String! }) {
+export const signUp = /* GraphQL */ `
+  mutation signup($user: CreateUserInput!) {
     signup(user: $user) {
-     token
+      token
       user {
-        id
         username
         email
+        username
         role
-        createdAt
       }
     }
   }
 `
 
 export const login = /* GraphQL */ `
-  mutation login($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
+  mutation login($user: LoginUserInput!) {
+    login(user: $user) {
       token
+      user {
+        username
+        email
+        username
+        role
+      }
     }
   }
 `
