@@ -2,7 +2,7 @@ import {App} from "../src/startServer";
 import {GraphQLClient} from "graphql-request";
 import {AddressInfo} from "net";
 import {login, signUp} from "./graphql";
-import {cleanAuthTest} from "./testData";
+import {cleanAuth} from "./testData";
 
 let graphQLClient: GraphQLClient;
 let getHost = (): string => "";
@@ -14,7 +14,7 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-  await cleanAuthTest();
+  await cleanAuth();
 });
 
 beforeEach((): void => {

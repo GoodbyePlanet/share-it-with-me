@@ -1,6 +1,6 @@
 import {prisma} from "../src/generated/prisma-client";
 
-export const createTestData = async () => {
+export const createUsers = async () => {
   await prisma.createUser({
     id: "user-id-1",
     email: "perica@gmail.com",
@@ -17,7 +17,7 @@ export const createTestData = async () => {
   });
 };
 
-export const createPostTest = async () => {
+export const createPosts = async () => {
   await prisma.createPost({
     id: "post-id-1",
     title: "NodeJS in Action",
@@ -53,16 +53,16 @@ export const createPostTest = async () => {
   });
 };
 
-export const cleanPostTest = async (): Promise<void> => {
+export const cleanPosts = async (): Promise<void> => {
   await prisma.deletePost({id: "post-id-1"});
   await prisma.deletePost({id: "post-id-2"});
 }
 
-export const cleanAuthTest = async (): Promise<void> => {
+export const cleanAuth = async (): Promise<void> => {
   await prisma.deleteUser({email: "testuser@gmail.com"})
 }
 
-export const cleanTestData = async (): Promise<void> => {
+export const cleanUsers = async (): Promise<void> => {
   await prisma.deleteUser({id: "user-id-1"});
   await prisma.deleteUser({id: "user-id-2"});
 }

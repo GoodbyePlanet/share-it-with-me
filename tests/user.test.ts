@@ -2,7 +2,7 @@ import {GraphQLClient} from "graphql-request";
 import {AddressInfo} from "net";
 import {App} from "../src/startServer";
 import {login, users} from "./graphql";
-import {cleanTestData, createTestData} from "./testData";
+import {cleanUsers, createUsers} from "./testData";
 
 let getHost = (): string => "";
 let graphQLClient: GraphQLClient;
@@ -11,11 +11,11 @@ beforeAll(async (): Promise<void> => {
   const app = await App();
   const {port} = app.address() as AddressInfo;
   getHost = () => `http://localhost:${port}/graphql`;
-  await createTestData();
+  await createUsers();
 });
 
 afterAll(async (): Promise<void> => {
-  await cleanTestData();
+  await cleanUsers();
 });
 
 beforeEach((): void => {
