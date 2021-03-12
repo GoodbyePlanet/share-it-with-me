@@ -25,26 +25,23 @@ npm install
 npm start
 ```
 
-## Start Prisma server
+## Start Postgres docker container
     > docker-compose up -d
 
-## Deploy Prisma service
-    > prisma deploy
+## To connect to docker container from host machine
+    >  psql postgresql://<user>:<password>@localhost:5432/share-it
 
 ## After changing data model we need to manually to re-generate Prisma Client
-    > prisma generate
+    > npx prisma migrate dev --name <name-of-the-migration> --preview-feature
 
 ## To reset Prisma database
     > prisma reset
 
 ## To add data from seed.graphql to the prisma service
-    > prisma seed -e .env
+    > npx prisma db seed --preview-feature
 
 ## To generate prisma data model based on existing database and the existing database model
     > prisma introspect
 
 ## GraphQL playground
     > http://localhost:8000/playground
-
-## Prisma Admin playground
-    > http://localhost:4466/dev/_admin

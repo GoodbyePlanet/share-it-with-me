@@ -3,7 +3,7 @@ schemaPath: src/schema.graphql
 projects:
   app:
     includes:
-      - prisma/seed.graphql
+      - prisma/seed.ts
 extensions:
   endpoints:
     Default GraphQL Endpoint:

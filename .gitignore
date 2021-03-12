@@ -4,6 +4,7 @@
 .env.production
 
 dist
+db
 node_modules
 learnings.txt
 resolvers-example.ts
