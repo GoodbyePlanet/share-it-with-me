@@ -6,3 +6,29 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  email     String   @unique
+  username  String
+  role      String   @default("USER")
+  password  String
+  posts     Post[]
+}
+
+model Post {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  title     String
+  content   String
+  tags      String[]
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String
+}
+
+enum Role {
+  ADMIN
+  USER
+}

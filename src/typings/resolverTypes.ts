@@ -1,5 +1,6 @@
 import {GraphQLResolveInfo} from "graphql";
-import {FragmentableArray, Post, User, UserNullablePromise, UserPromise} from "../generated/prisma-client";
+// import {FragmentableArray, Post, User, UserPromise} from "../generated/prisma-client";
+import {User, Post} from "@prisma/client";
 import {AuthResponse, Context, CreateUserInput, LoginUserInput} from "./modelTypes";
 
 type ResolverFn<TResult, TParent, TArgs, TContext> = (
@@ -25,25 +26,25 @@ export type Resolver<TResult, TParent = {}, TContext = {}, TArgs = {}> =
 
 export type QueryResolver<ParentType extends ResolversParent['Query'] = ResolversParent['Query'],
   ContextType = Context> = {
-  users: Resolver<FragmentableArray<ResolversParent['User']>, ParentType, User, ContextType>;
-  userById: Resolver<UserNullablePromise, ParentType, User, ContextType>;
-  posts: Resolver<FragmentableArray<ResolversParent['Post']>, ParentType, Post, ContextType>;
+  users: Resolver<Array<ResolversParent['User']>, ParentType, User, ContextType>;
+  // userById: Resolver<UserNullablePromise, ParentType, User, ContextType>;
+  // posts: Resolver<FragmentableArray<ResolversParent['Post']>, ParentType, Post, ContextType>;
 }
 
-export type PostAuthorResolver<ParentType extends ResolversParent['Post'] = ResolversParent['Post'],
-  ContextType = Context> = {
-  author: Resolver<UserPromise, ParentType, User, ContextType>;
-}
+// export type PostAuthorResolver<ParentType extends ResolversParent['Post'] = ResolversParent['Post'],
+//   ContextType = Context> = {
+//   author: Resolver<UserPromise, ParentType, User, ContextType>;
+// }
 
-export type UserPostsResolver<ParentType extends ResolversParent['User'] = ResolversParent['User'],
-  ContextType = Context> = {
-  posts: Resolver<FragmentableArray<ResolversParent['Post']>, ParentType, Post, ContextType>;
-}
+// export type UserPostsResolver<ParentType extends ResolversParent['User'] = ResolversParent['User'],
+//   ContextType = Context> = {
+//   posts: Resolver<FragmentableArray<ResolversParent['Post']>, ParentType, Post, ContextType>;
+// }
 
 export type AuthenticationResolver<ParentType extends ResolversParent['Mutation'] = ResolversParent['Mutation'],
   ContextType = Context> = {
   login: Resolver<Promise<ResolversParent['AuthResponse']>, ParentType, LoginUserInput, ContextType>;
-  signup: Resolver<Promise<ResolversParent['AuthResponse']>, ParentType, CreateUserInput, ContextType>;
+  // signup: Resolver<Promise<ResolversParent['AuthResponse']>, ParentType, CreateUserInput, ContextType>;
 }
 
 // export type Resolver<TResult, TParent, TArgs, TContext> = {

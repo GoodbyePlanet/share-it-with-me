@@ -1,8 +1,9 @@
-import {Prisma, User} from "../generated/prisma-client";
+// import {Prisma, User} from "../generated/prisma-client";
+import {User, PrismaClient} from "@prisma/client";
 import {Request} from "express";
 
 export interface Context {
-  prisma: Prisma
+  prisma: PrismaClient
   request: Request
   user?: User
 }
