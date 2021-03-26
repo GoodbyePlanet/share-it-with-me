@@ -10,7 +10,7 @@ async function seed() {
       email: 'pero@prisma.io',
       username: 'Pero',
       role: 'USER',
-      password: '$2y$12$8umiIWt7cdGiQediVOwsAesSoxx4MwO5oJXsL2f7o4Haajy49Yp9O',
+      password: '$2y$10$bBTAQ16zOlAOks964dzPnufFu8yZ1jNX4NOeNdxJ8a.S2yy0hzW6G',
       posts: {
         create: {
           title: 'Check out Prisma with Next.js',
@@ -28,7 +28,7 @@ async function seed() {
       email: 'jovica@prisma.io',
       username: 'Jovica',
       role: 'ADMIN',
-      password: '$2y$12$KxXZtUmO5yqtzAiy7RlfZ.6pa2M8AcTZhHLNEkc8DrqbDSK3Yw4hS',
+      password: '$2y$10$FrvIQ92.gA0rc9OjnZVkku8ZeRjP0duL86Pb.kVXsJejmwgdVNkG.',
       posts: {
         create: [
           {
