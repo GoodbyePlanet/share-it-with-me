@@ -34,6 +34,9 @@ npm start
 ## After changing data model we need to manually to re-generate Prisma Client
     > npx prisma migrate dev --name <name-of-the-migration> --preview-feature
 
+## Whenever you make changes to your database that are reflected in the Prisma schema
+    > npx prisma generate
+
 ## To reset Prisma database
     > prisma reset
 
