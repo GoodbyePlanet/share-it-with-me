@@ -10,7 +10,6 @@ type ResolverFn<TResult, TParent, TArgs, TContext> = (
   info?: GraphQLResolveInfo
 ) => Promise<TResult> | TResult;
 
-
 export type ResolversParent = {
   Query: {};
   Mutation: {};
@@ -36,10 +35,10 @@ export type PostAuthorResolver<ParentType extends ResolversParent['Post'] = Reso
   author: Resolver<User | {}, ParentType, User, ContextType>;
 }
 
-// export type UserPostsResolver<ParentType extends ResolversParent['User'] = ResolversParent['User'],
-//   ContextType = Context> = {
-//   posts: Resolver<FragmentableArray<ResolversParent['Post']>, ParentType, Post, ContextType>;
-// }
+export type UserPostsResolver<ParentType extends ResolversParent['User'] = ResolversParent['User'],
+  ContextType = Context> = {
+  posts: Resolver<Array<ResolversParent['Post']>, ParentType, Post, ContextType>;
+}
 
 export type AuthenticationResolver<ParentType extends ResolversParent['Mutation'] = ResolversParent['Mutation'],
   ContextType = Context> = {
