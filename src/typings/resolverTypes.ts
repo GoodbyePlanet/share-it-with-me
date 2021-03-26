@@ -27,7 +27,7 @@ export type Resolver<TResult, TParent = {}, TContext = {}, TArgs = {}> =
 export type QueryResolver<ParentType extends ResolversParent['Query'] = ResolversParent['Query'],
   ContextType = Context> = {
   users: Resolver<Array<ResolversParent['User']>, ParentType, User, ContextType>;
-  // userById: Resolver<UserNullablePromise, ParentType, User, ContextType>;
+  userById: Resolver<User | {}, ParentType, User, ContextType>;
   // posts: Resolver<FragmentableArray<ResolversParent['Post']>, ParentType, Post, ContextType>;
 }
 
