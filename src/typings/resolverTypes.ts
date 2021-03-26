@@ -28,13 +28,13 @@ export type QueryResolver<ParentType extends ResolversParent['Query'] = Resolver
   ContextType = Context> = {
   users: Resolver<Array<ResolversParent['User']>, ParentType, User, ContextType>;
   userById: Resolver<User | {}, ParentType, User, ContextType>;
-  // posts: Resolver<FragmentableArray<ResolversParent['Post']>, ParentType, Post, ContextType>;
+  posts: Resolver<Array<ResolversParent['Post']>, ParentType, Post, ContextType>;
 }
 
-// export type PostAuthorResolver<ParentType extends ResolversParent['Post'] = ResolversParent['Post'],
-//   ContextType = Context> = {
-//   author: Resolver<UserPromise, ParentType, User, ContextType>;
-// }
+export type PostAuthorResolver<ParentType extends ResolversParent['Post'] = ResolversParent['Post'],
+  ContextType = Context> = {
+  author: Resolver<User | {}, ParentType, User, ContextType>;
+}
 
 // export type UserPostsResolver<ParentType extends ResolversParent['User'] = ResolversParent['User'],
 //   ContextType = Context> = {
