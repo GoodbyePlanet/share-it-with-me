@@ -1,17 +1,8 @@
-import {GraphQLServer, Options} from "graphql-yoga";
-import {PrismaClient} from "@prisma/client";
+import {Options} from "graphql-yoga";
 import {GRAPHQL_ENDPOINT, GRAPHQL_PLAYGROUND, GRAPHQL_SUBSCRIPTIONS, PORT} from "./utils/config";
-import resolvers from "./resolvers";
-import {getUser, permissions} from "./accessControl/authentication";
+import {server} from "./server";
 
 export const App = async () => {
-  const server = new GraphQLServer({
-    typeDefs: ['./src/schema.graphql'],
-    resolvers,
-    middlewares: [permissions],
-    context: ({request}) => ({...request, prisma: new PrismaClient(), user: getUser(request)})
-  });
-
   const options: Options = {
     port: process.env.NODE_ENV === "test" ? 0 : PORT,
     endpoint: GRAPHQL_ENDPOINT,

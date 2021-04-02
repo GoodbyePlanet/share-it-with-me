@@ -1,5 +1,4 @@
 import {PrismaClient} from '@prisma/client'
-// import {ServerInfo} from 'apollo-server'
 import {execSync} from 'child_process'
 import getPort, {makeRange} from 'get-port'
 import {GraphQLClient} from 'graphql-request'
@@ -9,9 +8,11 @@ import {Client} from 'pg'
 // import { db } from '../api/db'
 // import { server } from '../api/server'
 // import {App as server} from "../src/startServer";
-import {GraphQLServer, Options} from "graphql-yoga";
-import {getUser, permissions} from "../src/accessControl/authentication";
-import resolvers from "../src/resolvers";
+import {Options} from "graphql-yoga";
+import {Server as HttpServer} from "http";
+import {server} from "../src/server";
+
+const db = new PrismaClient();
 
 export type TestContext = {
   client: GraphQLClient
@@ -35,7 +36,7 @@ export function createTestContext(): TestContext {
   })
 
   afterEach(async () => {
-    // await graphqlCtx.after()
+    await graphqlCtx.after()
     await prismaCtx.after()
   })
 
@@ -43,18 +44,11 @@ export function createTestContext(): TestContext {
 }
 
 function graphqlTestContext() {
-  // let serverInstance: ServerInfo | null = null
-
-  const server = new GraphQLServer({
-    typeDefs: ['./src/schema.graphql'],
-    resolvers,
-    middlewares: [permissions],
-    context: ({request}) => ({...request, prisma: new PrismaClient(), user: getUser(request)})
-  });
+  let serverInstance: HttpServer | null;
 
   return {
     async before() {
-      const port = await getPort({port: makeRange(4000, 6000)});
+      const port = await getPort({port: makeRange(6000, 8000)});
       const options: Options = {
         port,
         endpoint: '/graphql'
@@ -62,15 +56,18 @@ function graphqlTestContext() {
 
       console.log("PORT", port);
 
-      await server.start(options);
-      // serverInstance.server.on('close', async () => {
-      //   await db.$disconnect()
-      // })
+      serverInstance = await server.start(options);
+
+      serverInstance.on('close', async () => {
+        await db.$disconnect();
+      });
+
       return new GraphQLClient(`http://localhost:${port}/graphql`)
     },
-    // async after() {
-    //   serverInstance?.server.close()
-    // },
+    async after() {
+      console.log("INSIDE AFTER OF GRAPHQL TEXT CONTEXT");
+      serverInstance?.close();
+    },
   }
 }
 
