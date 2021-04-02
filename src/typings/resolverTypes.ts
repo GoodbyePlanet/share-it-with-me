@@ -1,6 +1,5 @@
 import {GraphQLResolveInfo} from "graphql";
-// import {FragmentableArray, Post, User, UserPromise} from "../generated/prisma-client";
-import {User, Post} from "@prisma/client";
+import {Post, User} from "@prisma/client";
 import {AuthResponse, Context, CreateUserInput, LoginUserInput} from "./modelTypes";
 
 type ResolverFn<TResult, TParent, TArgs, TContext> = (

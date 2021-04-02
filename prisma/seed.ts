@@ -50,5 +50,8 @@ async function seed() {
 }
 
 seed()
-  .catch(_ => process.exit(1))
+  .catch((error: any): void => {
+    console.error("An error has occurred", error);
+    process.exit(1)
+  })
   .finally(async () => await prisma.$disconnect());

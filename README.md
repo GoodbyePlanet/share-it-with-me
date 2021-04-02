@@ -44,7 +44,7 @@ npm start
     > npx prisma db seed --preview-feature
 
 ## To generate prisma data model based on existing database and the existing database model
-    > prisma introspect
+    > npx prisma introspect
 
 ## GraphQL playground
     > http://localhost:8000/playground
