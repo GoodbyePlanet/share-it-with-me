@@ -4,7 +4,7 @@ import {createPosts} from "./testData";
 
 let context: TestContext;
 
-beforeAll(async () => {
+beforeAll(async (): Promise<void> => {
   context = await createTestContext();
 });
 
