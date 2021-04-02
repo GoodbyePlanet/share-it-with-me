@@ -6,6 +6,7 @@
 dist
 db
 node_modules
+prisma/migrations
 learnings.txt
 resolvers-example.ts
 TODO.txt
