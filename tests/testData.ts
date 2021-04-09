@@ -1,5 +1,5 @@
 import {PrismaClient} from '@prisma/client';
-import {TestContext} from "./__helpers";
+import {TestContext} from "./testSetup/testContext";
 
 const prisma = new PrismaClient();
 
