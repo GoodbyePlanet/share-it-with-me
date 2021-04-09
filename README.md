@@ -12,7 +12,7 @@ npm install -g prisma
 Example of `.env` file
 
 ```
-PRISMA_ENDPOINT="http://localhost:4466/dev"
+DATABASE_URL=postgresql://<user>:<password>@localhost:5432/<db-name>
 GRAPHQL_ENDPOINT=/graphql
 GRAPHQL_SUBSCRIPTIONS=/subscriptions
 GRAPHQL_PLAYGROUND=/playground
