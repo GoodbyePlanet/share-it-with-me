@@ -1,27 +1,29 @@
-import {App} from "../src/startServer";
-import {GraphQLClient} from "graphql-request";
-import {AddressInfo} from "net";
 import {login, signUp} from "./graphql";
-// import {cleanAuth} from "./testData";
+import {TestContext} from "./testSetup/testContext";
+import {graphqlTestContext} from "./testSetup/graphqlTestContext";
+import {prismaTestContext} from "./testSetup/prismaTestContext";
 
-let graphQLClient: GraphQLClient;
-let getHost = (): string => "";
+const graphqlContext = graphqlTestContext(6002);
+const prismaContext = prismaTestContext();
 
-beforeAll(async () => {
-  const app = await App();
-  const {port} = app.address() as AddressInfo;
-  getHost = () => `http://localhost:${port}/graphql`;
+let context = {} as TestContext;
+
+beforeAll(async (): Promise<void> => {
+  const client = await graphqlContext.before();
+  const db = await prismaContext.before();
+
+  Object.assign(context, {
+    client,
+    db,
+  });
 });
 
-afterAll(async () => {
-  // await cleanAuth();
+afterAll(async (): Promise<void> => {
+  await graphqlContext.after();
+  await prismaContext.after();
 });
 
-beforeEach((): void => {
-  graphQLClient = new GraphQLClient(getHost());
-});
-
-describe.skip("Auth", (): void => {
+describe("Auth", (): void => {
   const testUser = "TestUser";
   const testUserEmail = "testuser@gmail.com";
 
@@ -33,8 +35,8 @@ describe.skip("Auth", (): void => {
     }
   };
 
-  it("should create user", async (): Promise<void> => {
-    const signUpResponse = await graphQLClient.request(signUp, userSignUpMutationVariables);
+  it("should create user on sign up", async (): Promise<void> => {
+    const signUpResponse = await context.client.request(signUp, userSignUpMutationVariables);
 
     expect(signUpResponse).toHaveProperty("signup");
     expect(signUpResponse.signup.user.username).toBe(testUser);
@@ -44,7 +46,7 @@ describe.skip("Auth", (): void => {
   it("should return `Email already taken!` error when attempting to create user with email that is already taken",
     async (): Promise<void> => {
       const signUpResponse = async () => {
-        await graphQLClient.request(signUp, userSignUpMutationVariables)
+        await context.client.request(signUp, userSignUpMutationVariables)
       };
 
       await expect(signUpResponse).rejects.toThrow("Email already taken!");
@@ -59,7 +61,7 @@ describe.skip("Auth", (): void => {
       }
     }
     const signUpResponse = async () => {
-      await graphQLClient.request(signUp, invalidMutationInput)
+      await context.client.request(signUp, invalidMutationInput)
     };
 
     await expect(signUpResponse).rejects.toThrow("Please use valid email");
@@ -75,7 +77,7 @@ describe.skip("Auth", (): void => {
         }
       }
       const signUpResponse = async () => {
-        await graphQLClient.request(signUp, invalidMutationInput)
+        await context.client.request(signUp, invalidMutationInput)
       };
 
       await expect(signUpResponse).rejects.toThrow("Password has to be at least 6 characters long");
@@ -89,7 +91,7 @@ describe.skip("Auth", (): void => {
   };
 
   it("should successfully login the user", async (): Promise<void> => {
-    const loginResponse = await graphQLClient.request(login, userLoginMutationVariables);
+    const loginResponse = await context.client.request(login, userLoginMutationVariables);
 
     expect(loginResponse).toHaveProperty("login");
     expect(loginResponse.login.token).not.toBeNull();
@@ -106,7 +108,7 @@ describe.skip("Auth", (): void => {
     };
 
     const loginResponse = async () => {
-      await graphQLClient.request(login, wrongEmailUserLogin)
+      await context.client.request(login, wrongEmailUserLogin)
     };
 
     await expect(loginResponse).rejects.toThrow("User not found!");
@@ -123,7 +125,7 @@ describe.skip("Auth", (): void => {
       };
 
       const loginResponse = async () => {
-        await graphQLClient.request(login, wrongCredentialsUserLogin)
+        await context.client.request(login, wrongCredentialsUserLogin)
       };
 
       await expect(loginResponse).rejects.toThrow("Provided credentials are invalid!");
