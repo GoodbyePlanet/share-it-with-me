@@ -44,7 +44,3 @@ export type AuthenticationResolver<ParentType extends ResolversParent['Mutation'
   login: Resolver<Promise<ResolversParent['AuthResponse']>, ParentType, LoginUserInput, ContextType>;
   signup: Resolver<Promise<ResolversParent['AuthResponse']>, ParentType, CreateUserInput, ContextType>;
 }
-
-// export type Resolver<TResult, TParent, TArgs, TContext> = {
-//   [key: string]: ResolverFn<TResult, TParent, TArgs, TContext>;
-// }
