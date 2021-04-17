@@ -1,50 +1,50 @@
-type Query {
-    users: [User]!
-    userById(id: ID!): User
-    posts: [Post]!
-}
-
-type Mutation {
-    signup(user: CreateUserInput!): AuthResponse!
-    login(user: LoginUserInput!): AuthResponse!
-}
-
-type User {
-    id: ID!
-    createdAt: String
-    email: String!
-    username: String!
-    role: Role!
-    posts: [Post!]
-}
-
-type Post {
-    id: ID!
-    createdAt: String
-    updatedAt: String
-    title: String!
-    content: String!
-    author: User!
-    tags: [String!]
-}
-
-type AuthResponse {
-    token: String!
-    user: User!
-}
-
-input CreateUserInput {
-    email: String!
-    username: String!
-    password: String!
-}
-
-input LoginUserInput {
-    email: String!
-    password: String!
-}
-
-enum Role {
-    ADMIN
-    USER
-}
+#type Query {
+#    users: [User]!
+#    userById(id: ID!): User
+#    posts: [Post]!
+#}
+#
+#type Mutation {
+#    signup(user: CreateUserInput!): AuthResponse!
+#    login(user: LoginUserInput!): AuthResponse!
+#}
+#
+#type User {
+#    id: ID!
+#    createdAt: String
+#    email: String!
+#    username: String!
+#    role: Role!
+#    posts: [Post!]
+#}
+#
+#type Post {
+#    id: ID!
+#    createdAt: String
+#    updatedAt: String
+#    title: String!
+#    content: String!
+#    author: User!
+#    tags: [String!]
+#}
+#
+#type AuthResponse {
+#    token: String!
+#    user: User!
+#}
+#
+#input CreateUserInput {
+#    email: String!
+#    username: String!
+#    password: String!
+#}
+#
+#input LoginUserInput {
+#    email: String!
+#    password: String!
+#}
+#
+#enum Role {
+#    ADMIN
+#    USER
+#}
