@@ -1,15 +1,18 @@
-import {Options} from "graphql-yoga";
-import {GRAPHQL_ENDPOINT, GRAPHQL_PLAYGROUND, GRAPHQL_SUBSCRIPTIONS, PORT} from "./utils/config";
-import {server} from "./server";
+import "reflect-metadata";
+import {ApolloServer} from "apollo-server";
+import {PrismaClient} from "@prisma/client";
+import {applyMiddleware} from "graphql-middleware";
 
-export const App = async () => {
-  const options: Options = {
-    port: process.env.NODE_ENV === "test" ? 0 : PORT,
-    endpoint: GRAPHQL_ENDPOINT,
-    subscriptions: GRAPHQL_SUBSCRIPTIONS,
-    playground: GRAPHQL_PLAYGROUND,
-  }
+import {PORT} from "./utils/config";
+import {schema} from "./schema";
 
-  return await server.start(options, ({port}): void =>
-    console.log(`🚀 Server ready at: http://localhost:${port}`));
+export const App = async (): Promise<void> => {
+
+  const server = new ApolloServer({
+    schema: applyMiddleware(await schema),
+    context: ({req}) => ({req, prisma: new PrismaClient()})
+  });
+
+  await server.listen(PORT, (): void =>
+    console.log(`🚀 Server ready at: http://localhost:${PORT}`));
 }
