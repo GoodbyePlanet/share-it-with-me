@@ -3,7 +3,7 @@ import * as bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
 
 import {Context} from "../context";
-import {UserNotFoundError, WrongCredentialsError} from "../validation";
+import {UserNotFoundError, WrongCredentialsError} from "../errorHandling";
 import {APP_SECRET} from "../utils/config";
 import {User} from "../model/User";
 
@@ -38,13 +38,13 @@ export class AuthenticationResolver {
     const user = await ctx.prisma.user.findUnique({where: {email: loginInput.email}});
 
     if (!user) {
-      return new UserNotFoundError;
+      throw UserNotFoundError;
     }
 
     const isValid = await bcrypt.compare(loginInput.password, user.password);
 
     if (!isValid) {
-      return new WrongCredentialsError;
+      throw WrongCredentialsError;
     }
 
     return {token: signJwtToken(user.id, user.role), user};
