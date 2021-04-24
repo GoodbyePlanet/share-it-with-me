@@ -7,6 +7,9 @@ export class User {
   @Field(() => ID)
   id: string;
 
+  @Field(() => Date)
+  createdAt: Date
+
   @Field()
   email: string;
 
