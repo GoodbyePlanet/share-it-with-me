@@ -5,6 +5,8 @@ const WrongCredentialsError = new UserInputError("Provided credentials are inval
 
 const UserNotFoundError = new UserInputError("User not found!");
 
+const UserAlreadyExistsError = new UserInputError("User already exists!");
+
 const formatError = (error: GraphQLError): GraphQLError => {
   if (error.message.startsWith("Access denied")) {
     return new ForbiddenError("Access denied, you don't have permission on this action!");
@@ -12,4 +14,4 @@ const formatError = (error: GraphQLError): GraphQLError => {
   return error;
 }
 
-export {formatError, UserNotFoundError, WrongCredentialsError};
+export {formatError, UserNotFoundError, WrongCredentialsError, UserAlreadyExistsError};

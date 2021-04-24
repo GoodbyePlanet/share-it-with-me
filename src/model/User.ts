@@ -1,6 +1,11 @@
 import {Field, ID, ObjectType} from "type-graphql";
 import {Post} from "./Post";
 
+export enum Role {
+  ADMIN = 'ADMIN',
+  USER = 'USER'
+}
+
 @ObjectType()
 export class User {
 
@@ -19,11 +24,6 @@ export class User {
   @Field(() => [Post], {nullable: true})
   posts: [Post] | null
 
-  @Field(() => String)
+  @Field(() => String, {defaultValue: Role.USER})
   role: Role;
-}
-
-export enum Role {
-  ADMIN = 'ADMIN',
-  USER = 'USER'
 }
