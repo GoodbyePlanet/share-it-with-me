@@ -20,7 +20,7 @@ class UserLoginInput {
 }
 
 @ObjectType()
-class AuthResponse {
+class LoginResponse {
 
   @Field()
   token: string
@@ -29,10 +29,10 @@ class AuthResponse {
   user: User
 }
 
-@Resolver(AuthResponse)
+@Resolver(LoginResponse)
 export class AuthenticationResolver {
 
-  @Mutation(() => AuthResponse)
+  @Mutation(() => LoginResponse)
   async login(@Arg('loginInput') loginInput: UserLoginInput, @Ctx() ctx: Context) {
 
     const user = await ctx.prisma.user.findUnique({where: {email: loginInput.email}});
