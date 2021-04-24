@@ -5,7 +5,7 @@ import * as jwt from "jsonwebtoken";
 import {AuthenticationUser, Context} from "../context";
 import {APP_SECRET} from "../utils/config";
 
-export const Authentication: AuthChecker<Context> = ({context}, roles) => {
+export const Authentication: AuthChecker<Context> = ({context}, roles): boolean => {
   const user = getUser(context.req);
 
   if (user) {
