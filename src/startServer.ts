@@ -6,13 +6,14 @@ import {PrismaClient} from "@prisma/client";
 import {PORT} from "./utils/config";
 import {schema} from "./schema";
 import {formatError} from "./errorHandling";
+import {LoggerPlugin} from "./middlewares/logger";
 
 export const App = async (): Promise<void> => {
-
   const server = new ApolloServer({
     schema: applyMiddleware(await schema),
     formatError,
-    context: ({req}) => ({req, prisma: new PrismaClient()})
+    context: ({req}) => ({req, prisma: new PrismaClient()}),
+    plugins: process.env.NODE_ENV === "prod" ? [] : [LoggerPlugin]
   });
 
   await server.listen(PORT, (): void =>
