@@ -12,6 +12,7 @@ import {
   Root,
   UseMiddleware
 } from "type-graphql";
+import {IsEmail, Matches} from "class-validator";
 import * as bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
 
@@ -30,12 +31,14 @@ const signJwtToken = (userId: string, role: string): string => {
 class CreateUserInput {
 
   @Field()
+  @IsEmail()
   email: string;
 
   @Field()
   username: string;
 
   @Field()
+  @Matches('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$')
   password: string;
 }
 
