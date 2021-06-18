@@ -1,16 +1,12 @@
+import {PrismaClient} from "@prisma/client";
+import {Service} from "typedi";
 import {Arg, Ctx, Field, InputType, Mutation, ObjectType, Resolver} from "type-graphql";
-import * as bcrypt from "bcryptjs";
-import * as jwt from "jsonwebtoken";
 
-import {Context} from "../context";
-import {UserNotFoundError, WrongCredentialsError} from "../errorHandling";
-import {APP_SECRET} from "../utils/config";
 import {User} from "../model/User";
-
-const signJwtToken = (userId: string, role: string) => jwt.sign({userId, role}, APP_SECRET!);
+import {AuthenticationService} from "../service/AuthenticationService";
 
 @InputType()
-class UserLoginInput {
+export class UserLoginInput {
 
   @Field()
   email: string
@@ -29,25 +25,16 @@ class LoginResponse {
   user: User
 }
 
+@Service()
 @Resolver(LoginResponse)
 export class AuthenticationResolver {
 
+  constructor(private readonly authenticationService: AuthenticationService) {
+  }
+
   @Mutation(() => LoginResponse)
-  async login(@Arg('loginInput') loginInput: UserLoginInput, @Ctx() ctx: Context) {
-
-    const user = await ctx.prisma.user.findUnique({where: {email: loginInput.email}});
-
-    if (!user) {
-      throw UserNotFoundError;
-    }
-
-    const isValid = await bcrypt.compare(loginInput.password, user.password);
-
-    if (!isValid) {
-      throw WrongCredentialsError;
-    }
-
-    return {token: signJwtToken(user.id, user.role), user};
+  async login(@Arg('loginInput') loginInput: UserLoginInput, @Ctx("prisma") prisma: PrismaClient) {
+    return this.authenticationService.login(loginInput, prisma)
   }
 
 }
