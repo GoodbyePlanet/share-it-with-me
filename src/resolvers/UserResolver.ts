@@ -12,23 +12,16 @@ import {
   Root,
   UseMiddleware
 } from "type-graphql";
+import {PrismaClient} from "@prisma/client";
+import {Service} from "typedi";
 import {IsEmail, Matches} from "class-validator";
-import * as bcrypt from "bcryptjs";
-import * as jwt from "jsonwebtoken";
 
 import {NotFound} from "../middlewares/notFound";
 import {User} from "../model/User";
-import {Context} from "../context";
-import {APP_SECRET} from "../utils/config";
-import {UserAlreadyExistsError} from "../errorHandling";
-
-const SALT_WORK_FACTOR = 10;
-const signJwtToken = (userId: string, role: string): string => {
-  return jwt.sign({userId, role}, APP_SECRET!);
-}
+import {UserService} from "../service/UserService";
 
 @InputType()
-class CreateUserInput {
+export class CreateUserInput {
 
   @Field()
   @IsEmail()
@@ -52,38 +45,34 @@ class SignUpResponse {
   user: User
 }
 
+@Service()
 @Resolver(User)
 export class UserResolver {
 
-  @Authorized("ADMIN", "USER")
-  @UseMiddleware(NotFound)
-  @Query(() => User, {nullable: true})
-  async userById(@Ctx() ctx: Context, @Arg("id") id: string) {
-    return ctx.prisma.user.findUnique({where: {id}});
+  constructor(private readonly userService: UserService) {
   }
 
   @Authorized("ADMIN")
   @Query(() => [User])
-  async users(@Ctx() ctx: Context) {
-    return ctx.prisma.user.findMany();
+  async users(@Ctx("prisma") prisma: PrismaClient) {
+    return this.userService.getUsers(prisma);
+  }
+
+  @Authorized("ADMIN", "USER")
+  @UseMiddleware(NotFound)
+  @Query(() => User, {nullable: true})
+  async userById(@Ctx("prisma") prisma: PrismaClient, @Arg("id") id: string) {
+    return this.userService.getUserById(id, prisma);
   }
 
   @FieldResolver()
-  async posts(@Root() user: User, @Ctx() ctx: Context) {
-    return ctx.prisma.user.findUnique({where: {id: user.id}}).posts();
+  async posts(@Root() user: User, @Ctx("prisma") prisma: PrismaClient) {
+    return this.userService.posts(user.id, prisma);
   }
 
   @Mutation(() => SignUpResponse, {name: "signUp"})
-  async createUser(@Arg('createUserInput') createUserInput: CreateUserInput, @Ctx() ctx: Context) {
-    const password = await bcrypt.hash(createUserInput.password, SALT_WORK_FACTOR);
-    const existingUser = await ctx.prisma.user.findUnique({where: {email: createUserInput.email}});
-
-    if (existingUser) {
-      throw UserAlreadyExistsError;
-    }
-
-    const user = await ctx.prisma.user.create({data: {...createUserInput, password}});
-    return {token: signJwtToken(user.id, user.role), user}
+  async createUser(@Arg('createUserInput') createUserInput: CreateUserInput, @Ctx("prisma") prisma: PrismaClient) {
+    return this.userService.createUser(createUserInput, prisma)
   }
 
 }
