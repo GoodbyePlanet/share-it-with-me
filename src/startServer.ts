@@ -13,7 +13,7 @@ export const App = async (): Promise<void> => {
     schema: applyMiddleware(await schema),
     formatError,
     context: ({req}) => ({req, prisma: new PrismaClient()}),
-    plugins: process.env.NODE_ENV === "prod" ? [] : [LoggerPlugin]
+    plugins: [LoggerPlugin]
   });
 
   await server.listen(PORT, (): void =>
