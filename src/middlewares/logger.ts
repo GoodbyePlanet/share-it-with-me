@@ -15,5 +15,3 @@ export const LoggerPlugin = {
     return;
   },
 }
-
-// estimated / 12 mjeseci / broj clanova

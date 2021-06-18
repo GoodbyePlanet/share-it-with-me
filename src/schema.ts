@@ -15,6 +15,6 @@ export const schema = buildSchema({
   emitSchemaFile: {
     path: __dirname + "/schema.gql",
     commentDescriptions: true,
-    sortedSchema: false, // by default the printed schema is sorted alphabetically
+    sortedSchema: false,
   },
 })
