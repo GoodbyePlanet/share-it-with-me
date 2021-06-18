@@ -17,8 +17,8 @@ import {Service} from "typedi";
 import {IsEmail, Matches} from "class-validator";
 
 import {NotFound} from "../middlewares/notFound";
-import {User} from "../model/User";
 import {UserService} from "../service/UserService";
+import {User} from "../model/User";
 
 @InputType()
 export class CreateUserInput {
@@ -71,8 +71,9 @@ export class UserResolver {
   }
 
   @Mutation(() => SignUpResponse, {name: "signUp"})
-  async createUser(@Arg('createUserInput') createUserInput: CreateUserInput, @Ctx("prisma") prisma: PrismaClient) {
-    return this.userService.createUser(createUserInput, prisma)
+  async createUser(@Arg('createUserInput') createUserInput: CreateUserInput,
+                   @Ctx("prisma") prisma: PrismaClient) {
+    return this.userService.createUser(createUserInput, prisma);
   }
 
 }

@@ -4,7 +4,7 @@ import {Service} from "typedi";
 @Service()
 export class PostService {
 
-  async getPosts(prisma: PrismaClient): Promise<Array<Post> | null> {
+  async getPosts(prisma: PrismaClient): Promise<Array<Post>> {
     return prisma.post.findMany();
   }
 
