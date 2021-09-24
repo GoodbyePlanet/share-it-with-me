@@ -14,4 +14,7 @@ export const LoggerPlugin = {
     log.info(`- [Request Started] { query: ${query}, variables: ${variables}, operationName: ${requestContext.request.operationName} }`);
     return;
   },
+  didEncounterErrors: (requestContext: any) => {
+    console.log("INSIDE REQUEST CONTEXT...", requestContext);
+  }
 }
